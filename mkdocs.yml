@@ -1,0 +1,5 @@
+site_name: The Wumpy project
+
+theme:
+  name: null
+  custom_dir: 'theme/'
