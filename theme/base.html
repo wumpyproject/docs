@@ -1,10 +1,14 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>{% if page.title %}{{ page.title }} - {% endif %}{{ config.site_name }}</title>
+    {% block htmltitle %}
+      <title>{% if page.title %}{{ page.title }} - {% endif %}{{ config.site_name }}</title>
+    {% endblock %}
   </head>
 
   <body>
-    {{ page.content }}
+    {% block content %}
+      {% include "partials/content.html" %}
+    {% endblock %}
   </body>
 </html>
