@@ -1,0 +1,22 @@
+<header>
+  <nav id="masthead" class="page-layout">
+
+    <div>
+      {% block site_name %}
+        <a class="normalize-link" href="{{ nav.homepage.url|url }}">{{config.site_name}}</a>
+      {% endblock %}
+    </div>
+
+    <ul id="masthead-nav">
+      {% for nav_item in nav %}
+        <li
+          {% if nav_item.active %} id="masthead-nav-active" {% endif %}
+          class="masthead-nav-item"
+        >
+          <a class="normalize-link" href="{{ nav_item.url|url }}">{{ nav_item.title }}</a>
+        </li>
+      {% endfor %}
+    </ul>
+
+  </nav>
+</header>

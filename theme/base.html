@@ -4,9 +4,18 @@
     {% block htmltitle %}
       <title>{% if page.title %}{{ page.title }} - {% endif %}{{ config.site_name }}</title>
     {% endblock %}
+
+    {% block styles %}
+      <link href="{{ 'css/main.css'|url }}" rel="stylesheet">
+    {% endblock %}
   </head>
 
-  <body>
+  <body color-scheme="imagine">
+
+    {% block masthead %}
+      {% include "partials/masthead.html" %}
+    {% endblock %}
+
     {% block content %}
       {% include "partials/content.html" %}
     {% endblock %}

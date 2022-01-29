@@ -1,0 +1,37 @@
+header {
+  position: sticky;
+  top: 0;
+
+  color: white;
+  background-color: var(--primary-color);
+  font-family: var(--font-headline);
+
+  padding: 0.5rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+
+  box-shadow:
+    0 0 0.2rem rgba(0, 0, 0, 10%),
+    0 0.2rem 0.4rem rgba(0, 0, 0, 20%);
+}
+
+#masthead {
+  display: flex;
+}
+
+#masthead-nav {
+  display: flex;
+  margin: 0;
+  padding: 0;
+}
+
+.masthead-nav-item {
+  color: grey;
+  display: inline-block;
+  padding-left: 1em;
+  font-size: 1em;
+}
+
+#masthead-nav-active {
+  color: white;
+}
