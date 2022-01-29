@@ -11,3 +11,7 @@
   padding: 0;
   list-style: none;
 }
+
+:target {
+  scroll-margin-top: 5rem;
+}
