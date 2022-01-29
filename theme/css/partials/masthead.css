@@ -17,6 +17,8 @@ header {
 
 #masthead {
   display: flex;
+  justify-content: space-between;
+  line-height: 3;
 }
 
 #masthead-nav {
