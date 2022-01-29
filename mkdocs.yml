@@ -1,5 +1,5 @@
-site_name: The Wumpy project
-
+site_name: Some MKDocs Theme
+copyright: Copyright © 2022 - 2022 Bluenix
 theme:
   name: null
   custom_dir: 'theme/'
