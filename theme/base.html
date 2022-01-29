@@ -22,7 +22,7 @@
       {% include "partials/masthead.html" %}
     {% endblock %}
 
-    <div style="flex-grow: 1;" class="page-layout">
+    <div id="page-body" class="page-layout">
       {% block sidebar %}
         {% include "partials/sidebar.html" %}
       {% endblock %}
@@ -30,6 +30,10 @@
       <main>
         {% block content %}
           {% include "partials/content.html" %}
+        {% endblock %}
+
+        {% block toc %}
+          {% include "partials/toc.html" %}
         {% endblock %}
       </main>
     </div>

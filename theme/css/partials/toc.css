@@ -1,0 +1,13 @@
+#toc {
+  top: 6rem;
+  width: 5em;
+  height: 0;
+  position: sticky;
+  flex-shrink: 0;
+}
+
+#toc ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}

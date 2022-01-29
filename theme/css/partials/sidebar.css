@@ -1,0 +1,12 @@
+#sidebar {
+  top: 6rem;
+  height: 0;
+  flex-shrink: 0;
+  position: sticky;
+}
+
+#sidebar ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}

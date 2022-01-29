@@ -1,0 +1,21 @@
+<nav id="sidebar">
+  {% macro render_item(item) %}
+    <li>
+      <a class="normalize-link" href="{{ item.url|url }}">{{ item.title }}</a>
+      {% if item.children %}
+        <ul>
+          {% for child in item.children %}
+            {{ render_item(child)}}
+          {% endfor %}
+        </ul>
+      {% endif %}
+    </li>
+  {% endmacro %}
+
+  <ul>
+    {# This will iterate through the children of the currently active page #}
+    {% for item in nav | selectattr('active', 'true') | first | attr('children') %}
+      {{ render_item(item) }}
+    {% endfor %}
+  </ul>
+</nav>

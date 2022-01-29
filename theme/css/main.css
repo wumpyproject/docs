@@ -1,5 +1,7 @@
 @import "theme.css";
 @import "palette.css";
 
-@import "partials/masthead.css";
 @import "partials/footer.css";
+@import "partials/masthead.css";
+@import "partials/sidebar.css";
+@import "partials/toc.css";

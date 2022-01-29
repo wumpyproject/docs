@@ -1,0 +1,30 @@
+<nav id="toc">
+  {% macro render_item(item) %}
+    <li>
+      <a class="normalize-link" href="{{ item.url|url }}">{{ item.title }}</a>
+      {% if item.children %}
+        <ul>
+          {% for child in item.children %}
+            {{ render_item(child)}}
+          {% endfor %}
+        </ul>
+      {% endif %}
+    </li>
+  {% endmacro %}
+
+  {% if page.toc %}
+    <ul>
+      {% for item in page.toc %}
+        {% if item.level == 1 %}
+          {% for child in item.children %}
+            {{ render_item(child)}}
+          {% endfor %}
+    
+        {% else %}
+          {{ render_item(item) }}
+        {% endif %}
+      {% endfor %}
+
+    </ul>
+  {% endif %}
+</nav>
