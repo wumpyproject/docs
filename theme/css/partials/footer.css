@@ -1,0 +1,26 @@
+footer {
+  background-color: var(--branding-not-quite-black);
+  color: rgb(189, 194, 202);
+  padding: 1rem;
+}
+
+.footer-nav {
+  color: var(--footer-color);
+  display: flex;
+  justify-content: space-between;
+}
+
+.footer-link:hover, .footer-link:active, .focus-theme-link:focus {
+  color: var(--footer-color);
+  text-decoration: underline;
+}
+
+footer hr {
+  height: 1px;
+  background-color: var(--primary-color);
+  border: none;
+}
+
+.footer-made-with {
+  color: var(--footer-made-with);
+}

@@ -1,6 +1,12 @@
 <!DOCTYPE html>
 <html>
   <head>
+
+    {% block site_meta %}
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% endblock %}
+
     {% block htmltitle %}
       <title>{% if page.title %}{{ page.title }} - {% endif %}{{ config.site_name }}</title>
     {% endblock %}
@@ -16,8 +22,20 @@
       {% include "partials/masthead.html" %}
     {% endblock %}
 
-    {% block content %}
-      {% include "partials/content.html" %}
+    <div style="flex-grow: 1;" class="page-layout">
+      {% block sidebar %}
+        {% include "partials/sidebar.html" %}
+      {% endblock %}
+
+      <main>
+        {% block content %}
+          {% include "partials/content.html" %}
+        {% endblock %}
+      </main>
+    </div>
+
+    {% block footer %}
+      {% include "partials/footer.html" %}
     {% endblock %}
   </body>
 </html>
