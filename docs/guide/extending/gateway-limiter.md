@@ -13,11 +13,13 @@ to get statistics into Grafana. Another use-case is implementing
 The gateway limiter is not very complicated and is built around two
 asynchronous context managers:
 
-- It all starts with a callable given the Shard ID. This is not `await`ed but
-  should return the first asynchronous context manager. Note that it is not
-  until the second asynchronous manager detects an IDENTIFY opcode that
-  `max_concurrency` ratelimiting should be done. This is simply the first and
-  easiest place the ratelimiter gets to know about the shard ID connected to.
+- It all starts with a callable given the max concurrency bucket calculated by
+  `shard_id % max_concurrency` (per the Discord API). This bucket allows
+  gateway limiters to follow max concurrency limits. The callable is not
+  `await`ed but should return the first asynchronous context manager. Note that
+  it is not until the second asynchronous manager detects an IDENTIFY opcode
+  that max concurrency ratelimiting should be done. This callable is just the
+  easiest way to let the gateway limiter know of which bucket it is in.
 
 - The first asynchronous context manager should be used to setup background
   tasks or setup other required connections. This in turn needs to return
