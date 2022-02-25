@@ -1,5 +1,17 @@
 site_name: Some MKDocs Theme
 copyright: Copyright © 2022 - 2022 Bluenix
+
+repo_name: GitHub
+repo_url: https://github.com/wumpyproject/docs/
+
 theme:
   name: null
   custom_dir: 'theme/'
+
+nav:
+  - 'Home':
+    - 'index.md'
+  - 'Extending':
+    - 'guide/extending/index.md'
+    - 'guide/extending/rest-ratelimiter.md'
+    - 'guide/extending/gateway-limiter.md'
