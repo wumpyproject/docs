@@ -9,9 +9,22 @@ theme:
   custom_dir: 'theme/'
 
 nav:
-  - 'Home':
-    - 'index.md'
-  - 'Extending':
-    - 'guide/extending/index.md'
-    - 'guide/extending/rest-ratelimiter.md'
-    - 'guide/extending/gateway-limiter.md'
+  - Home: 'index.md'
+
+  - Guide:
+    - Introduction: 'index.md'
+    - Application Commands:
+      - Hello world: 'guide/application-commands/hello-world.md'
+      - Subcommands: 'guide/application-commands/nested-hellos.md'
+      - Command options: 'guide/application-commands/options.md'
+      - Optional options: 'guide/application-commands/optional-options.md'
+      - Context menus: 'guide/application-commands/context-menus.md'
+      - Option choices: 'guide/application-commands/rock-paper-scissors.md'
+      - Multiple options: 'guide/application-commands/mcdonalds-order.md'
+      - Enum options: 'guide/application-commands/choices-with-enums.md'
+      - Advanced options: 'guide/application-commands/advanced-options.md'
+
+  - Extending:
+    - Introduction: 'extending/index.md'
+    - REST ratelimiter: 'extending/rest-ratelimiter.md'
+    - Gateway limiter: 'extending/gateway-limiter.md'
