@@ -93,6 +93,16 @@ internet who can read the repository. Finally press "Commit changes".
 
 You can now skip to [Submitting your pull request](#submitting-your-pr).
 
+## Developing locally
+
+Developing locally assumes you already have some experience with Git and
+contributing. Simply follow the steps you usually take. To serve the
+documentation locally you can run:
+
+```bash
+mkdocs serve --watch-theme
+```
+
 ## Submitting your PR
 
 Finally it is time to submit your pull request. Go to your profile and find
