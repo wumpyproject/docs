@@ -21,5 +21,5 @@ mkdocs serve
 ## Contributing
 
 Thank you for your interest in contributing. All kinds of changes are welcome.
-Please read the [Contribution Guide](./CONTRIBUTING) for complete steps,
+Please read the [Contribution Guide](./CONTRIBUTING.md) for complete steps,
 including how to use Git and GitHub.
