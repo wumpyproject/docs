@@ -18,8 +18,15 @@ locally for development:
 mkdocs serve
 ```
 
+## Licensing
+
+The Wumpy project documentation is permissively licensed under one of MIT or
+Apache 2.0 (up to you). See the [LICENSE file](./LICENSE) for more.
+
+This decision was made to have maximum compatibility and freedom.
+
 ## Contributing
 
-Thank you for your interest in contributing. All kinds of changes are welcome.
-Please read the [Contribution Guide](./CONTRIBUTING.md) for complete steps,
-including how to use Git and GitHub.
+Thank you for your interest in contributing. Compared to many other projects,
+all kinds of changes are welcomed. If you're unsure how to get started please
+read the [Contribution Guide](./CONTRIBUTING.md).
