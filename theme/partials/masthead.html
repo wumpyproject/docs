@@ -1,9 +1,17 @@
+{% macro find_url(item) %}
+  {% if item.url is defined %}
+    {{ item.url | url }}
+  {% else %}
+    {{ find_url(item.children | first) }}
+  {% endif %}
+{% endmacro %}
+
 <header>
   <nav id="masthead" class="page-layout">
 
     <div>
       {% block site_name %}
-        <a class="normalize-link" href="{{ nav.homepage.url|url }}">{{config.site_name}}</a>
+        <a class="normalize-link" href="{{ nav.homepage.url|url }}">{{ config.site_name }}</a>
       {% endblock %}
     </div>
 
@@ -13,7 +21,7 @@
           {% if nav_item.active %} id="masthead-nav-active" {% endif %}
           class="masthead-nav-item"
         >
-          <a class="normalize-link" href="{{ nav_item.url|url }}">{{ nav_item.title }}</a>
+          <a class="normalize-link" href="{{ find_url(nav_item) }}">{{ nav_item.title }}</a>
         </li>
       {% endfor %}
     </ul>
