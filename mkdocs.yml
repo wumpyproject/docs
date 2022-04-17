@@ -12,7 +12,6 @@ nav:
   - Home: 'index.md'
 
   - Guide:
-    - Introduction: 'index.md'
     - Application Commands:
       - Hello world: 'guide/application-commands/hello-world.md'
       - Subcommands: 'guide/application-commands/nested-hellos.md'

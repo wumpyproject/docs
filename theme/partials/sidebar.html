@@ -1,11 +1,11 @@
 <nav id="sidebar">
-  {% macro render_item(item) %}
+  {% macro render_sidebar(item) %}
     <li>
       <a class="normalize-link" href="{{ item.url|url }}">{{ item.title }}</a>
       {% if item.children %}
         <ul>
           {% for child in item.children %}
-            {{ render_item(child)}}
+            {{ render_sidebar(child) }}
           {% endfor %}
         </ul>
       {% endif %}
@@ -16,10 +16,7 @@
     {% set active = nav | selectattr('active', 'true') | list %}
 
     {% if active | length > 0 %}
-      {# This will iterate through the children of the currently active page #}
-      {% for item in active | first | attr('children') %}
-        {{ render_item(item) }}
-      {% endfor %}
+      {{ render_sidebar(active | first) }}
     {% endif %}
   </ul>
 </nav>
