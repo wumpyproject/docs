@@ -1,0 +1,34 @@
+.highlight .c1 {
+  color: rgba(0, 0, 0, 35%);
+}
+
+.highlight .si {
+  color: #cb4b16;
+}
+
+.highlight .nd,
+.highlight .nd + .o,
+.highlight .nd + .o + .n,
+.highlight .nd + .o + .n + .p {
+  color: #cb4b16;
+}
+
+.highlight .nb {
+  color: #dc322f;
+}
+
+.highlight .nc {
+  color: #b58900;
+}
+
+.highlight .k, .highlight .kc, .highlight .kn, .highlight .ow {
+  color: #859900;
+}
+
+.highlight .s1, .highlight .s2, .highlight .sa, .highlight .sd, .highlight .mi {
+  color: #2aa198;
+}
+
+.highlight .fm, .highlight .nf {
+  color: #268bd2;
+}

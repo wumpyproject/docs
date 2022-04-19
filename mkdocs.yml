@@ -11,6 +11,9 @@ theme:
 markdown_extensions:
   - admonition
 
+  - pymdownx.highlight:
+      use_pygments: true
+
   - pymdownx.tabbed
   - pymdownx.superfences
 
