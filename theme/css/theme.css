@@ -50,6 +50,25 @@ pre code {
   border-radius: 4px;
 }
 
+.admonition {
+  padding: 0.5rem 1rem 1rem .75rem;
+  border-left: 4px solid var(--primary-color);
+  border-radius: 4px;
+  background: #f2f3f5;
+  font-size: 14px;
+  margin-top: 8px;
+}
+
+.admonition > p {
+  margin: inherit;
+}
+
+.admonition-title {
+  margin: inherit;
+  font-size: 1rem;
+  font-weight: 500;
+}
+
 .tabbed-set {
   display: flex;
   flex-wrap: wrap;
