@@ -8,6 +8,10 @@ theme:
   name: null
   custom_dir: 'theme/'
 
+markdown_extensions:
+  - pymdownx.tabbed
+  - pymdownx.superfences
+
 nav:
   - Home: 'index.md'
 

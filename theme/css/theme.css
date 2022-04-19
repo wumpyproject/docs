@@ -40,8 +40,7 @@ code {
     Consolas, 'Andale Mono WT', 'Andale Mono', 'Lucida Console', 'Lucida Sans Typewriter',
     Monaco, 'Courier New', Courier, monospace;
   background: #f2f3f5;
-  padding-left: 0.2em;
-  padding-right: 0.2em;
+  padding: 0 0.2em;
   border-radius: 3px;
 }
 
@@ -49,4 +48,40 @@ pre code {
   display: block;
   padding: 0.5em;
   border-radius: 4px;
+}
+
+.tabbed-set {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 1em 0;
+}
+
+.tabbed-set > input {
+  opacity: 0;
+  display: none;
+}
+
+.tabbed-set label {
+  padding: 1em 1.25em 0.75em;
+  font-weight: bold;
+  font-size: 0.9em;
+  border-bottom: 2px solid transparent;
+  cursor: pointer;
+  transition: color 250ms;
+}
+
+.tabbed-set .tabbed-content {
+  width: 100%;
+  display: none;
+  border-top: 1px solid #e3e5e8;
+}
+
+.tabbed-set input:checked + label {
+  color: var(--primary-color);
+  border-color: var(--primary-color);
+}
+
+.tabbed-set input:checked + label + .tabbed-content {
+  order: 99;
+  display: block;
 }
