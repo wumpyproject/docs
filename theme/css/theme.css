@@ -13,6 +13,10 @@ html, body {
   font-family: Whitney, 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
+article ol, article p, article ul {
+  line-height: 1.7;
+}
+
 #page-body, main {
   display: flex;
   align-items: baseline;
