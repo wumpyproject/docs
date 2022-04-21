@@ -1,6 +1,7 @@
 #sidebar {
   top: 6rem;
   height: 0;
+  width: 12rem;
   flex-shrink: 0;
   position: sticky;
 }
