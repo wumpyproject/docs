@@ -23,8 +23,8 @@ header {
 
 #masthead-nav {
   display: flex;
+  flex-grow: 1;
   margin: 0;
-  padding: 0;
 }
 
 .masthead-nav-item {
