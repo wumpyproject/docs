@@ -12,7 +12,7 @@
     </li>
   {% endmacro %}
 
-  {% if page.toc %}
+  {% if page.toc and page.meta.toc|default(true) %}
     <ul>
       {% for item in page.toc %}
         {% if item.level == 1 %}
