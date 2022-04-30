@@ -8,6 +8,13 @@ theme:
   name: null
   custom_dir: 'theme/'
 
+plugins:
+  - mkdocstrings:
+      handlers:
+        python:
+          rendering:
+            show_source: false
+
 markdown_extensions:
   - admonition
   - meta
@@ -37,3 +44,11 @@ nav:
     - Introduction: 'extending/index.md'
     - REST ratelimiter: 'extending/rest-ratelimiter.md'
     - Gateway limiter: 'extending/gateway-limiter.md'
+
+  - API Reference:
+    - Wumpy-gateway: 'api/gateway.md'
+    - Wumpy-rest: 'api/rest.md'
+    - Wumpy-models: 'api/models.md'
+    - Wumpy-cache: 'api/cache.md'
+    - Wumpy-interactions: 'api/interactions.md'
+    - Wumpy-bot: 'api/bot.md'
