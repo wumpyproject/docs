@@ -3,3 +3,5 @@ Jinja2==3.0.3
 pymdown-extensions==9.3
 Pygments==2.11.2
 mkdocstrings==0.18.1
+
+git+https://github.com/wumpyproject/wumpy.git
