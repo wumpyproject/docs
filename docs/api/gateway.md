@@ -4,4 +4,4 @@ toc: false
 
 # `wumpy-gateway` API Reference
 
-::: wumpy.gateway
+*API Reference is not yet available*

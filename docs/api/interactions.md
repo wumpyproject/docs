@@ -4,4 +4,4 @@ toc: false
 
 # `wumpy-interactions` API Reference
 
-::: wumpy.interactions
+*API Reference is not yet available*

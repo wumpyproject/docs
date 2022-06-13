@@ -4,4 +4,4 @@ toc: false
 
 # `wumpy-rest` API Reference
 
-::: wumpy.rest
+*API Reference is not yet available*

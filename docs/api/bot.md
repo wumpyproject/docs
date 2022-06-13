@@ -4,4 +4,4 @@ toc: false
 
 # `wumpy-bot` API Reference
 
-::: wumpy.bot
+*API Reference is not yet available*

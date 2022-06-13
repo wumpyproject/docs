@@ -4,4 +4,4 @@ toc: false
 
 # `wumpy-models` API Reference
 
-::: wumpy.models
+*API Reference is not yet available*
