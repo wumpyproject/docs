@@ -104,6 +104,13 @@ if __name__ == '__main__':
     uvicorn.run(app, host='0.0.0.0', lifespan='on')
 ```
 
+Now, install the dependencies by running the following **in the Shell** (not
+the Console):
+
+```bash
+pip install git+https://github.com/wumpyproject/wumpy.git
+```
+
 Before running the code, create secrets for the Application ID, Public Key,
 and Token you saved from the Developer portal. They should be named
 `APPLICATION_ID`, `PUBLIC_KEY`, and `TOKEN` respectively.
