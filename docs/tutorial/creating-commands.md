@@ -1,8 +1,8 @@
 # Creating Application Commands
 
 Application Commands are first entrypoint to Discord's interactions. In
-[Getting set up] you started with a very trivial `/hello` command but there
-much more to it.
+[Getting set up](./getting-set-up/) you started with a very trivial `/hello`
+command but there is much more to it!
 
 ## Anatomy of a command
 
