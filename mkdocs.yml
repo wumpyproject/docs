@@ -28,17 +28,12 @@ markdown_extensions:
 nav:
   - Home: 'index.md'
 
-  - Guide:
-    - Application Commands:
-      - Hello world: 'guide/application-commands/hello-world.md'
-      - Subcommands: 'guide/application-commands/nested-hellos.md'
-      - Command options: 'guide/application-commands/options.md'
-      - Optional options: 'guide/application-commands/optional-options.md'
-      - Context menus: 'guide/application-commands/context-menus.md'
-      - Option choices: 'guide/application-commands/rock-paper-scissors.md'
-      - Multiple options: 'guide/application-commands/mcdonalds-order.md'
-      - Enum options: 'guide/application-commands/choices-with-enums.md'
-      - Advanced options: 'guide/application-commands/advanced-options.md'
+  - Tutorial:
+    - Getting Set Up: 'tutorial/getting-set-up/index.md'
+    - Creating Commands: 'tutorial/creating-commands.md'
+    - Command Options: 'tutorial/command-options.md'
+    - Option Choices: 'tutorial/option-choices.md'
+    - Context menus: 'tutorial/context-menus.md'
 
   - Extending:
     - Introduction: 'extending/index.md'
