@@ -13,7 +13,9 @@
   {% endmacro %}
 
   {% if page.toc and page.meta.toc|default(true) %}
-    <ul>
+    <strong>Table of Contents</strong>
+
+    <ul id="toc-list">
       {% for item in page.toc %}
         {% if item.level == 1 %}
           {% for child in item.children %}

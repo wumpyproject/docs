@@ -12,3 +12,7 @@
   list-style: none;
   line-height: 1.5;
 }
+
+#sidebar-links {
+  margin-top: 0.5em;
+}

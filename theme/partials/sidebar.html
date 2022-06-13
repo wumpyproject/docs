@@ -1,22 +1,28 @@
 <nav id="sidebar">
-  {% macro render_sidebar(item) %}
-    <li>
-      <a class="normalize-link" href="{{ item.url|url }}">{{ item.title }}</a>
-      {% if item.children %}
-        <ul>
-          {% for child in item.children %}
-            {{ render_sidebar(child) }}
-          {% endfor %}
-        </ul>
-      {% endif %}
-    </li>
+  {% macro render_sidebar(children) %}
+    <ul>
+      {% for child in children %}
+        <li>
+          <a class="normalize-link" href="{{ child.url | url }}">{{ child.title }}</a>
+          {% if child.children %}
+            {{ render_sidebar(child.children) }}
+          {% endif %}
+        </li>
+      {% endfor %}
+    </ul>
+
   {% endmacro %}
 
-  <ul>
-    {% set active = nav | selectattr('active', 'true') | list %}
+  {% set active = nav | selectattr('active', 'true') | list %}
 
-    {% if active | length > 0 and page.meta.sidebar|default(true) %}
-      {{ render_sidebar(active | first) }}
+  {% if active | length > 0 and page.meta.sidebar|default(true) %}
+    {% set tab = active | first %}
+    <strong>{{ tab.title }}</strong>
+
+    {% if tab.children %}
+      <div id="sidebar-links">
+        {{ render_sidebar(tab.children) }}
+      </div>
     {% endif %}
-  </ul>
+  {% endif %}
 </nav>
