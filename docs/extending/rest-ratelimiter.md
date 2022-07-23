@@ -86,23 +86,39 @@ implements the correct magic methods. The official typing annotation for it
 looks like this:
 
 ```python
-# The type allows the usage to the right of the code:
-Ratelimiter = AsyncContextManager[  # async with ratelimiter as rl:
-    Callable[[Route], AsyncContextManager[  # async with rl(route) as lock:
-        Callable[[Mapping[str, str]], Awaitable]  # await lock(headers)
-    ]]
-]
+class Ratelimiter(Protocol):
+    async def __aenter__(self) -> object:
+        ...
+
+    async def __aexit__(
+        self,
+        exc_type: Optional[Type[BaseException]] = None,
+        exc_val: Optional[BaseException] = None,
+        exc_tb: Optional[TracebackType] = None
+    ) -> Optional[bool]:
+        ...
+
+    def __call__(self, route: Route) -> AsyncContextManager[
+        Callable[[Mapping[str, str]], Awaitable[object]]
+    ]:
+        ...
 ```
 
 It has been designed to allow a variety of uses and implementations, and is by
-choice very vague. To get started, create an asynchronous context manager by
-defining `__aenter__()` and `__aexit__()`. It should look somewhat like this:
+choice very vague by only using magic methods. In the following examples, the
+ratelimiter don't do any ratelimiting - it only implements the right interface.
+To get started, create an asynchronous context manager by defining
+`__aenter__()` and `__aexit__()`. It should look somewhat like this:
 
 ```python
+from types import TracebackType
+from typing import Optional, Type
+
+
 class NoOpRatelimiter:
     """Ratelimiter implementation that does nothing; a no-op implementation."""
 
-    async def __aenter__(self) -> object:  # TODO
+    async def __aenter__(self) -> object:
         ...
 
     async def __aexit__(
@@ -119,16 +135,15 @@ initial asynchronous setup, such as setting up connections or background tasks.
 It is entered on startup of the requester and only exits when the requester is
 being closed.
 
-It is now important that this in turn returns a callable that takes a `Route`,
-which will be called every time a request is about to be made with the `Route`
-instance that will be used. This callable **cannot** be defined with
-`async def`; if you need to use `await` during this step consider using
-[`@asynccontextmanager`][ctxlib-acm] which also fulfills the next step -
-returning *another* asynchronous context manager.
+For every request made (including retries), the ratelimiter will be called
+with the `Route` used for the request. This method must be synchronous and
+return an asynchronous context manager. If you need `await` during this step,
+delay that until the asynchronous context manager is entered by returning a
+proxy object or using [`@asynccontextmanager`][ctxlib-acm].
 
 ```python
     @asynccontextmanager
-    async def acquire(self, route: Route) -> AsyncGenerator[
+    async def __call__(self, route: Route) -> AsyncGenerator[
         Callable[[Mapping[str, str]], Coroutine],
         None
     ]:
@@ -138,33 +153,37 @@ returning *another* asynchronous context manager.
         ...
 ```
 
-The point of this second asynchronous context manager is now to acquire the
-underlying lock, or make the necessary request. This is where the pre-emptive
-waiting should take place! Again, this should *in turn* return another
-callable - but this time it has to be defined using `async def` so that it is
-*awaitable*. This callable is how your ratelimiter is notified of the returned
-ratelimit headers and should be where you update internal structures. Note that
-the response will not return to the user before this has exited, so consider
-starting a task if you know it will take a lot of time to complete.
+It is within this second asynchronous context manager that you acquire the
+underlying lock and have the pre-emptive waiting take place for the ratelimits.
+Once completed, this should return an asynchronous callable. The point of this
+callable is that the ratelimiter gets updated with the headers of the request
+where the ratelimit information can be found.
 
 ```python
     async def update(self, headers: Mapping[str, str]) -> object:
         pass
 
+    # The return type may look a little weird, but this is how
+    # @asynccontextmanager works. You pass it a function that returns an
+    # async generator (which yields what the asynchronous context manager
+    # then returns).
     @asynccontextmanager
-    async def acquire(self, route: Route) -> AsyncGenerator[
+    async def __call__(self, route: Route) -> AsyncGenerator[
         Callable[[Mapping[str, str]], Coroutine],
         None
     ]:
-        # The return type may look a little weird, but this is how
-        # @asynccontextmanager works. You pass it a function that returns an
-        # async generator (which yields what the asynchronous context manager
-        # then returns).
+        # This is a no-op ratelimiter, but this would be the place to do the
+        # pre-emptive waiting for ratelimits.
+        ...
+
         yield self.update
 ```
 
-Finally, the second asynchronous context manager is exited and the response is
-returned to the user.
+This callable will be called after each request, after which the asynchronous
+context manager will be exited and the response returned to the user. This
+means that if updating the ratelimiter or exiting the asynchronous context
+manager takes a lot of time, it might be best to launch a different task so
+that it does not slow down the requester.
 
 Here is a dummy example of a ratelimiter that does no actual ratelimiting,
 all it does is implement the necessary behaviour:
@@ -173,12 +192,8 @@ all it does is implement the necessary behaviour:
 class NoOpRatelimiter:
     """Ratelimiter implementation that does nothing; a no-op implementation."""
 
-    async def __aenter__(self) -> Callable[
-        [Route], AsyncContextManager[
-            Callable[[Mapping[str, str]], Awaitable]
-        ]
-    ]:
-        return self.acquire
+    async def __aenter__(self) -> Self:
+        return self
 
     async def __aexit__(
         self,
@@ -188,20 +203,23 @@ class NoOpRatelimiter:
     ) -> object:
         pass
 
-    async def update(self, headers: Mapping[str, str]) -> object:
-        pass
-
+    # The return type may look a little weird, but this is how
+    # @asynccontextmanager works. You pass it a function that returns an
+    # async generator (which yields what the asynchronous context manager
+    # then returns).
     @asynccontextmanager
-    async def acquire(self, route: Route) -> AsyncGenerator[
+    async def __call__(self, route: Route) -> AsyncGenerator[
         Callable[[Mapping[str, str]], Coroutine],
         None
     ]:
-        # The return type may look a little weird, but this is how
-        # @asynccontextmanager works. You pass it a function that returns an
-        # async generator (which yields what the asynchronous context manager
-        # then returns).
+        # This is a no-op ratelimiter, but this would be the place to do the
+        # pre-emptive waiting for ratelimits.
+        ...
+
         yield self.update
 
+    async def update(self, headers: Mapping[str, str]) -> object:
+        pass
 ```
 
   [ctxlib-acm]: https://docs.python.org/3/library/contextlib.html#contextlib.asynccontextmanager
