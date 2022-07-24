@@ -1,8 +1,8 @@
 # Getting set up
 
 Before you're able to start coding there are a handful of steps you first need
-to go through. The most important part is getting a Discord application and
-bot to test your changes with.
+to go through. This tutorial starts by walking through how to setup a Discord
+bot account and use a slash command, running on Replit.
 
 ## Creating a Discord bot
 
@@ -65,12 +65,9 @@ Finally select the server you want to add the bot to and click "Authorize":
 
 ## Setting up in an IDE
 
-This tutorial will be using [Replit] because it provides a URL which can be
-used for Discord's interaction system. If you are using a different IDE
-installed on your computer, take a look at [Ngrok] to get an external URL.
-
-Start by visiting [Replit] and creating a new Python Repl. Paste in the
-following code to get started:
+After having created a Discord bot account it is time to setup your IDE. Start
+by visiting [Replit] and creating a new Python Repl. Paste in the following
+code to get started:
 
 ```python
 import os
@@ -124,11 +121,6 @@ application. Paste it into the Interactions Endpoint URL to this URL and press
 
 ![Developer dashboard with a saved URL](./saved-interactions-url.png)
 
-If you are using [Ngrok] locally, use the URL it outputs when you start the
-app. Compared to when using [Replit], you will need to re-do this step every
-time you restart your computer because [Ngrok] gives you a different URL each
-time unless you pay for their Pro tier.
-
 ## Using application commands
 
 With everything setup, try opening a DM with the bot and using the `/hello`
@@ -136,7 +128,8 @@ command. You should get a response, like this:
 
 ![Bot responding to invoekd command interaction](./used-command.png)
 
-You can now continue with the Tutorial!
+You have now correctly setup a Discord bot account and IDE capable of hosting
+it! Continue to the next page of the tutorial.
 
   [Discord Developer Portal]: https://discord.com/developers/applications/
   [Replit]: https://replit.com/
