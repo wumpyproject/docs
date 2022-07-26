@@ -10,6 +10,7 @@ theme:
 
 plugins:
   - mkdocstrings:
+      default_handler: python
       handlers:
         python:
           rendering:
@@ -36,6 +37,7 @@ nav:
     - Context menus: 'tutorial/context-menus.md'
 
   - Topics:
+    - 'index.md'
     - Anatomy of a command: 'topics/anatomy-of-a-command.md'
 
   - Extending:

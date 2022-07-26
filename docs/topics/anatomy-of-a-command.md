@@ -73,4 +73,37 @@ command
 
 Commands and subcommand groups that hold subcommands cannot be called on their
 own, that's why these types of commands are created differently - using the
-`.group()` method. Try creating a group, like this:
+`.group()` method. Compared to `.command()`, `.group()` is not a decorator:
+
+```python
+greet = app.group('greet', 'Group of greeting commands')
+```
+
+The library fluently uses either a (sub)command or group for the top-level
+command, and makes no distinction between the two. This means that a
+double-nested subcommand is represented as
+`subcommand-group -> subcommand-group -> subcommand` (compared to Discord's
+official `command -> subcommand-group -> subcommand`.
+
+### History of library representation
+
+Previously the library had 3 classes matching Discord's: `Command`,
+`SubcommandGroup`, `Subcommand`. However, the implementation became messy
+because `Command` was forced to handle its callback being `None`. To reduce
+duplication of code, the implementation of `Command` was actually a subclass
+of both `SubcommandGroup` and `Subcommand` which meant that it was instead
+`Subcommand` which had to handle the missing callback.
+
+The library is designed to be statically typed, to aid with development and
+reduce unexpected or complicated behaviour. Having a lot of dynamicness leads
+to code which needs to be taught rather than simply read. This meant that
+the dynamicness of having the callback be missing was unfavourable and
+considered janky.
+
+When redesigned to the current system, this was adjusted to remove the
+forced top-level command. There is now only two representations:
+`SubcommandGroup`, and `Command`. `SubcommandGroup` is mostly unchanged apart
+from adding a `.group()` method, since it now used for both levels of nesting.
+As a side-effect of this, there is nothing stopping the user from nesting
+commands further than allowed by Discord - except for Discord itself which will
+raise an error about invalid configuration if the user attempts this.
