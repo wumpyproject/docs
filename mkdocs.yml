@@ -31,13 +31,13 @@ nav:
 
   - Tutorial:
     - Getting Set Up: 'tutorial/getting-set-up/index.md'
-    - Creating Commands: 'tutorial/creating-commands.md'
+    - Creating Commands: 'tutorial/creating-commands/index.md'
     - Command Options: 'tutorial/command-options.md'
     - Option Choices: 'tutorial/option-choices.md'
     - Context menus: 'tutorial/context-menus.md'
 
   - Topics:
-    - 'index.md'
+    - 'topics/index.md'
     - Anatomy of a command: 'topics/anatomy-of-a-command.md'
 
   - Extending:

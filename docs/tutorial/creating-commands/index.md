@@ -36,7 +36,7 @@ This is all it takes to create a subcommand. Now restart the bot and go back
 to your DMs with the bot to try out the command by typing `/greet wave`! You
 should get a waving emoji in response:
 
-...
+![Bot responding to `/greet wave` command interaction](./used-greet-command.png)
 
 ## Nested subcommads
 
