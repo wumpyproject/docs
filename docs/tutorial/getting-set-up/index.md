@@ -126,7 +126,7 @@ application. Paste it into the Interactions Endpoint URL to this URL and press
 With everything setup, try opening a DM with the bot and using the `/hello`
 command. You should get a response, like this:
 
-![Bot responding to invoekd command interaction](./used-command.png)
+![Bot responding to invoked command interaction](./used-command.png)
 
 You have now correctly setup a Discord bot account and IDE capable of hosting
 it! Continue to the next page of the tutorial.
