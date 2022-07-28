@@ -84,16 +84,8 @@ app = InteractionApp(
 )
 
 
-# Feel free to remove this after using it once to verify that it works!
-@app.command()
-async def hello(interaction: CommandInteraction) -> None:
-    """Your first command; hello world."""
-    await interaction.respond('...world')
-
-
-# When you follow the tutorial, there will be examples you can copy and run
-# in your bot. It is important that you place these here - after 'app'
-# has been defined, but before uvicorn.run:
+# When you follow the tutorial, this is where you should place the commands
+# and other code: after 'app' has been defined, but before uvicorn.run
 ...
 
 
@@ -105,7 +97,7 @@ Now, install the dependencies by running the following **in the Shell** (not
 the Console):
 
 ```bash
-pip install git+https://github.com/wumpyproject/wumpy.git
+pip install uvicorn git+https://github.com/wumpyproject/wumpy.git
 ```
 
 Before running the code, create secrets for the Application ID, Public Key,
@@ -121,15 +113,13 @@ application. Paste it into the Interactions Endpoint URL to this URL and press
 
 ![Developer dashboard with a saved URL](./saved-interactions-url.png)
 
-## Using application commands
-
-With everything setup, try opening a DM with the bot and using the `/hello`
-command. You should get a response, like this:
-
-![Bot responding to invoked command interaction](./used-command.png)
+Discord does not allow saving the Interactions Endpoint URL unless it
+successfully handles authorization. To test this it will send some sample
+requests with- and without correct headers, meanin that you will see some log
+output from Uvicorn.
 
 You have now correctly setup a Discord bot account and IDE capable of hosting
-it! Continue to the next page of the tutorial.
+it! Continue to the next page of the tutorial to start creating commands.
 
   [Discord Developer Portal]: https://discord.com/developers/applications/
   [Replit]: https://replit.com/
