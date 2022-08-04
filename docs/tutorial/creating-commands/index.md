@@ -1,24 +1,60 @@
 # Creating Application Commands
 
-Application Commands is the first entrypoint to Discord's interactions. In
-[Getting set up](./getting-set-up/) you started with a very simple `/hello`
-command, this tutorial expands on that with new greeting subcommands.
+Application Commands is the first entrypoint to Discord's interactions. This
+tutorial will walk through creating simple greeting commands and how to make
+use of subcommands to categorize them.
 
 The code in this tutorial should be placed where the `...` is in the code
 copied from [Getting set up](./getting-set-up): between defining `app =` and
 calling `uvicorn.run()`.
 
-## Defining subcommands
+## Starting with commands
 
-Start by creating a group to house the subcommand, it will need a name
-(`'greet'`) and a description of what it does (`'Group of greeting commands'`):
+Start by defining an asynchronous `greet()` function decorated by
+`@app.command()`. The function should take one argument being the interaction,
+which contains contextual information about how it was called:
 
 ```python
-greet = app.group('greet', 'Group of greeting commands')
+@app.command()
+async def greet(interaction: CommandInteraction) -> None:
+    ...
 ```
 
-Now that you have the group, you can create a subcommand named `wave` which
-responds with a simple waving emoji:
+Next, give the function a docstring. The library reads the docstring's first
+line as the description for the command:
+
+```python
+@app.command()
+async def greet(interaction: CommandInteraction) -> None:
+    """Greet someone with a waving emoji."""
+    ...
+```
+
+This is all boilerplate necessary to define a command which has no additional
+options. To respond to the interaction with a message, call and await the
+`interaction.respond()` method with the content:
+
+```python
+@app.command()
+async def greet(interaction: CommandInteraction) -> None:
+    """Greet someone with a waving emoji."""
+    await interaction.respond('👋')
+```
+
+Save the file and restart the server. After a short while of waiting, Discord
+will have updated and you should be able to invoke the command with `/greet`.
+
+## Defining subcommands
+
+This tutorial will introduce many more greeing commands, to organize this,
+create a group to contain them all. Compared to commands which are created with
+a decorator, groups are created by calling `.group()` with the name and
+description of the roup.
+
+Create a group called `greet` and change `@app.command()` to `@greet.command()`
+so that the command gets registered *under the group*. Finally, rename the
+command you created above to `wave` - this will make the full name of the
+command `/greet wave`.
 
 ```python
 greet = app.group('greet', 'Group of greeting commands')
