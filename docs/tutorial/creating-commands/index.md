@@ -1,8 +1,7 @@
 # Creating Application Commands
 
 Application Commands is the first entrypoint to Discord's interactions. This
-tutorial will walk through creating simple greeting commands and how to make
-use of subcommands to categorize them.
+tutorial will walk through creating commands which make simple responses.
 
 The code in this tutorial should be placed where the `...` is in the code
 copied from [Getting set up](./getting-set-up): between defining `app =` and
@@ -10,13 +9,17 @@ calling `uvicorn.run()`.
 
 ## Starting with commands
 
-Start by defining an asynchronous `greet()` function decorated by
+To get a feel for how commands are defined, you can start by recreating
+Discord's native `/shrug` command. This command takes no options and responds
+with the text `'¯\_(ツ)_/¯'`.
+
+Start by defining an asynchronous `shrug()` function decorated by
 `@app.command()`. The function should take one argument being the interaction,
 which contains contextual information about how it was called:
 
 ```python
 @app.command()
-async def greet(interaction: CommandInteraction) -> None:
+async def shrug(interaction: CommandInteraction) -> None:
     ...
 ```
 
@@ -25,104 +28,95 @@ line as the description for the command:
 
 ```python
 @app.command()
-async def greet(interaction: CommandInteraction) -> None:
-    """Greet someone with a waving emoji."""
+async def shrug(interaction: CommandInteraction) -> None:
+    """Responds with shrugging ASCII art."""
     ...
 ```
 
-This is all boilerplate necessary to define a command which has no additional
-options. To respond to the interaction with a message, call and await the
-`interaction.respond()` method with the content:
+This is all the boilerplate necessary to define the command. Now, respond to
+the interaction by awaiting `interaction.respond()` with the shrugging
+ASCII art as the first positional argument:
 
 ```python
 @app.command()
-async def greet(interaction: CommandInteraction) -> None:
-    """Greet someone with a waving emoji."""
-    await interaction.respond('👋')
+async def shrug(interaction: CommandInteraction) -> None:
+    """Responds with shrugging ASCII art."""
+    await interaction.respond('¯\_(ツ)_/¯')
 ```
 
 Save the file and restart the server. After a short while of waiting, Discord
-will have updated and you should be able to invoke the command with `/greet`.
+will have updated and you should be able to invoke the command with `/shrug`.
 
 ## Defining subcommands
 
-This tutorial will introduce many more greeing commands, to organize this,
+This tutorial will introduce many more commands. To organize all commands,
 create a group to contain them all. Compared to commands which are created with
 a decorator, groups are created by calling `.group()` with the name and
-description of the roup.
+description of the group.
 
-Create a group called `greet` and change `@app.command()` to `@greet.command()`
-so that the command gets registered *under the group*. Finally, rename the
-command you created above to `wave` - this will make the full name of the
-command `/greet wave`.
+Create a group called `text` and change `@app.command()` to `@text.command()`
+so that the command gets registered *under the group*. The new name for the
+command is now `/text shrug`:
 
 ```python
-greet = app.group('greet', 'Group of greeting commands')
+text = app.group('text', 'Group of text manipulation commands')
 
 
-# Note that it says 'greet' and not 'app', otherwise it'd
+# Note that it says 'text' and not 'app', otherwise it'd
 # just register a normal command
-@greet.command()
-async def wave(interaction: CommandInteraction) -> None:
-    """Greet someone with a waving emoji."""
-    await interaction.respond('👋')
+@text.command()
+async def shrug(interaction: CommandInteraction) -> None:
+    """Responds with shrugging ASCII art."""
+    await interaction.respond('¯\_(ツ)_/¯')
 ```
 
-This is all it takes to create a subcommand. Now restart the bot and go back
-to your DMs with the bot to try out the command by typing `/greet wave`! You
-should get a waving emoji in response:
-
-![Bot responding to `/greet wave` command interaction](./used-greet-command.png)
+This is all it takes to create a subcommand! Try invoking the command again,
+but this time with `/text shrug`.
 
 ## Nested subcommads
 
 Discord also allows nesting one level deeper - making subcommand groups.
-Add a `gif` group, nested underneath the original `greet` group, in
-preparation for more subcommands:
+In preparation for another command which responds with ASCII art, create an
+`art` subcommand group and move the `shrug` command below it:
 
 ```python
-greet = app.group('greet', 'Group of greeting commands')
+text = app.group('text', 'Group of text manipulation commands')
 
 
-@greet.command()
-async def wave(interaction: CommandInteraction) -> None:
-    """Greet someone with a waving emoji."""
-    await interaction.respond('👋')
+art = text.group('art', 'Group of commands for ASCII art')
 
 
-gif = greet.group('gif', 'Greet someone with a GIF')
+@art.command()
+async def shrug(interaction: CommandInteraction) -> None:
+    """Responds with shrugging ASCII art."""
+    await interaction.respond('¯\_(ツ)_/¯')
 ```
 
-Now create the two subcommands *under the `gif` subcommand group* which respond
-with different GIFs that embed:
+Now that you have the subcommand group ready, create another subcommand called
+`tableflip` which replicates the equivalent native `/tableflip` command and
+responds with `'(╯°□°）╯︵ ┻━┻'`:
 
 ```python
-greet = app.group('greet', 'Group of greeting commands')
+text = app.group('text', 'Group of text manipulation commands')
 
 
-@greet.command()
-async def wave(interaction: CommandInteraction) -> None:
-    """Greet someone with a waving emoji."""
-    await interaction.respond('👋')
+art = text.group('art', 'Group of commands for ASCII art')
 
 
-gif = greet.group('gif', 'Greet someone with a GIF')
+@art.command()
+async def shrug(interaction: CommandInteraction) -> None:
+    """Responds with shrugging ASCII art."""
+    await interaction.respond('¯\_(ツ)_/¯')
 
 
-@gif.command()
-async def waving(interaction: CommandInteraction) -> None:
-    """Greet someone with a waving GIF."""
-    await interaction.respond('https://tenor.com/bs7Re.gif')
-
-
-@gif.command()
-async def hugging(interaction: CommandInteraction) -> None:
-    """Greet someone with a hugging GIF."""
-    await interaction.respond('https://tenor.com/bbQCJ.gif')
+@art.command()
+async def tableflip(interaction: CommandInteraction) -> None:
+    """Responds with a tableflip ASGII art."""
+    await interaction.respond('(╯°□°）╯︵ ┻━┻')
 ```
 
-You have now created 3 different subcommands at different levels of nesting:
-`/greet wave`, `/greet gif waving`, and `/greet gif hugging`!
+With the above code, you have now created two subcommands:
+`/text art shrug` and `/text art tableflip`.
 
 If you want to read an in-depth explanation of defining commands and nesting
 subcommands, see [Anatomy of a command](../topics/anatomy-of-a-command),
