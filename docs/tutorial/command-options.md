@@ -1,169 +1,165 @@
 # Application Command Options
 
 Application Commands also have the ability to take input from the user. This
-is done through options which are passed as arguments by the library.
+is done through options which are passed as arguments by the library. In this
+tutorial, you will create another text command which reverses the content.
 
-## Specifying Command Options
+## Creating the command
 
-Wumpy has support for specifying options in a variety of ways and aims to be
-as flexible as possible. This means there are several ways to specify the
-information that Discord needs.
-
-To get started, take a look at this example of an `/echo` command:
+To start off, add the command boilerplate for the subcommand under the `text`
+group. This code fits into the code in the previous page:
 
 ```python
-@app.command()
-async def echo(
+# The following line will already be in your code from the previous page, but
+# it is included for the purpose of navigating where to place the subcommand.
+text = app.group('text', 'Group of text manipulation commands')
+
+
+@text.command()
+async def reverse(interaction: CommandInteraction) -> None:
+    """Reverse the passed text content."""
+    ...
+```
+
+## Adding the text command option
+
+Before you can respond to the interaction, you'll need to define an option the
+user can pass with the text to reverse. This is done by adding another
+parameter to the function.
+
+Add a parameter named `text` with the annotation `str`. The default of this
+parameter should be calling `Option()`:
+
+```python
+text = app.group('text', 'Group of text manipulation commands')
+
+
+@text.command()
+async def reverse(
         interaction: CommandInteraction,
-        text: str = Option(description='Text to repeat')
+        text: str = Option(),
 ) -> None:
-    """Have the bot echo back the specified text."""
-    await interaction.respond(text)
+    """Reverse the passed text content."""
+    ...
 ```
 
-Here the library will read the option name from the parameter - which in this
-case is `text` - then continue analysing the annotion and default. From this,
-it understands that the `/echo` command should have one option named `text`
-with the description `'Text to repeat'` which takes in a string from the user.
-
-If you do not want to use type annotations you can instead pass `type=`
-to the `Option()` default.
-
-### Alternate API
-
-The second API available to specify options uses decorators instead of a
-special parameter default:
+Discord requires that each option has a name and description. The library is
+able to read the parameter name, but you will need to pass the description you
+wish to use to `Option()`:
 
 ```python
-@option('text', description='Text to repeat')
-@app.command()
-async def echo(interaction: CommandInteraction, text: str) -> None:
-    """Have the bot echo back the specified text."""
-    await interaction.respond(text)
-```
+text = app.group('text', 'Group of text manipulation commands')
 
-The name of the parameter is passed to the decorator, followed by the fields to
-specify. You cannot create new options this way, each option needs a parameter
-in the callback function.
 
-This API is not recommended because the metadata from each option is moved away
-from its definition and is not as extensible. You are free to use a combination
-of these APIs as you wish, but remember to be consistent within your codebase!
-
-## Option types
-
-Wumpy supports a variety of annotations representing different option types:
-
-- `str`
-- `int`
-- `bool`
-- `float`
-- `InteractionChannel`
-- `User`
-- `InteractionMember`
-
-Special handling is done for `User` and `InteractionMember`. If a command
-annotated with `InteractionMember` does not receive member information it will
-not be called. This means that is is recommended to use
-`Union[User, InteractionMember]` which causes the library to attempt to lookup
-member information and fallback to a User - the command will always be called.
-
-On top of this, the library handles more advanced typhints including
-`Annotated`, certain `Union`s (such as `Optional` and
-`Union[User, InteractionMember]`), as well as `Literal` and `Enum` subclasses
-for [option choices](./option-choices.md).
-
-## Optional and Required Options
-
-Options can also be marked optional if they are not required. This is done by
-specifying an option default. This default is only stored locally and will be
-passed by the library when an optional option wasn't passed by the user.
-
-Because the parameter default is already used by the library to specify option
-metadata, the default can be passed as the first positional argument. Here the
-default is an empty string `''` for the `signature` parameter:
-
-```python
-@app.command()
-async def echo(
+@text.command()
+async def reverse(
         interaction: CommandInteraction,
-        text: str = Option(description='Text to repeat'),
-        signature: text = Option('', description='Footer signature')
+        text: str = Option(description='Text to reverse'),
 ) -> None:
-    """Have the bot echo back the specified text."""
-    if signature:
-        text += f'\n\n---\n{signature}'
-
-    await interaction.respond(text)
+    """Reverse the passed text content."""
+    ...
 ```
 
-If you are using the alternate decorator-based API, the actual parameter
-is free to use. Therefore the default can just be specified by using the actual
-parameter default. Alternatively, you can pass `default=` to the `@option()`
-decorator.
+Now that you have the text to reverse, you can respond to the interaction:
 
 ```python
-@option('text', description='Text to repeat')
-@option('signature', description='Footer signature')
-@app.command()
-async def echo(
-        interaction: CommandInteraction,
-        text: str,
-        signature: str = ''
-) -> None:
-    """Have the bot echo back the specified text."""
-    if signature:
-        text += f'\n\n---\n{signature}'
+text = app.group('text', 'Group of text manipulation commands')
 
-    await interaction.respond(text)
+
+@text.command()
+async def reverse(
+        interaction: CommandInteraction,
+        text: str = Option(description='Text to reverse'),
+) -> None:
+    """Reverse the passed text content."""
+    # This is implemented as a nice indexing trick, by setting the
+    # step to -1 it gets walked backwards
+    await interaction.respond(text[::-1])
 ```
 
-You can also have defaults of a different type than the option. For example,
-the library special-cases `Optional` from `typing` and understands that the
-default must be `None`:
+Save the file and restart the server. You can now invoke this command with
+`/text reverse` and pass a msg to reverse. For example:
+
+```text
+/text reverse text: racecar
+```
+
+## Multiple command options and defaults
+
+To demonstrate using multiple command options and setting option default
+values, create another command for repeating some text multiple times.
+Place the command under the same `text` group and name it `repeat`:
 
 ```python
-@app.command()
-async def echo(
-        interaction: CommandInteraction,
-        text: str = Option(description='Text to repeat'),
-        signature: Optional[str] = Option(description='Footer signature')
-) -> None:
-    """Have the bot echo back the specified text."""
-    if signature is not None:
-        text += f'\n\n---\n{signature}'
+# Similar to before, the following line will already be in your code from the
+# previous page. You can place the command below the 'reverse' command
+text = app.group('text', 'Group of text manipulation commands')
 
-    await interaction.respond(text)
+
+@text.command()
+async def repeat(
+        interaction: CommandInteraction,
+) -> None:
+    """Repeat the passed text a number of times."""
+    ...
 ```
 
-## Number bounds
+This command will need two options: one for the text to repeat and the second
+for the number of times. Create two parameters for them and name them `text`
+and `number`, with the annotations `str` and `int` for string- and integer
+options:
 
-The Discord API allows specifying a minimum and maximum value for integers
-and floats. This is done by specifying a `min=` and `max=` to the `Option()`
-parameter default or `@option()` default:
+```python
+text = app.group('text', 'Group of text manipulation commands')
 
-=== "Parameter default"
 
-    ```python
-    # The name of the command needs to be specified because if the function
-    # name was hex() it would override the built-in and cause recursion.
-    @app.command(name='hex')
-    async def hex_cmd(
-            interaction: CommandInteraction,
-            num: int = Option(min=0, max=255, description='Number to convert')
-    ) -> None:
-        """Convert a number to its hex representation."""
-        await interaction.respond(hex(num))
-    ```
+@text.command()
+async def repeat(
+        interaction: CommandInteraction,
+        text: str = Option(description='The text to repeat'),
+        number: int = Option(description='The number of times to repeat'),
+) -> None:
+    """Repeat the passed text a number of times."""
+    ...
+```
 
-=== "Decorator API"
+Now, it isn't very necessary to pass `repeat` every time if it is often the
+same value. Give the option a default by passing a positional argument or
+using `default=`:
 
-    ```python
-    # The name of the command needs to be specified because if the function
-    # name was hex() it would override the built-in and cause recursion.
-    @option('num', min=0, max=255, description='Number to convert')
-    @app.command(name='hex')
-    async def hex_cmd(interaction: CommandInteraction, num: int) -> None:
-        """Convert a number to its hex representation."""
-        await interaction.respond(hex(num))
-    ```
+```python
+text = app.group('text', 'Group of text manipulation commands')
+
+
+@text.command()
+async def repeat(
+        interaction: CommandInteraction,
+        text: str = Option(description='The text to repeat'),
+        number: int = Option(5, description='The number of times to repeat'),
+) -> None:
+    """Repeat the passed text a number of times."""
+    ...
+```
+
+The library will now mark the option as non-required and automatically pass the
+default when it isn't passed. Add the missing implementation and try running
+the command with `/text repeat`:
+
+```python
+text = app.group('text', 'Group of text manipulation commands')
+
+
+@text.command()
+async def repeat(
+        interaction: CommandInteraction,
+        text: str = Option(description='The text to repeat'),
+        number: int = Option(5, description='The number of times to repeat'),
+) -> None:
+    """Repeat the passed text a number of times."""
+    await interaction.respond(text * number)
+```
+
+You have now created commands with several options with different option types.
+To read more about the option API and commands, take a look at
+[Anatomy of a command](../topics/anatomy-of-a-command.md). Otherwise, just
+continue with the tutorial to learn about specifying command choices.
