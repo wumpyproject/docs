@@ -1,116 +1,130 @@
 # Application Command Option Choices
 
-Option choices allow you to restrict what the user is allowed to input.
-There can be up to 25 choices which can be set for integers, floats, or
-strings.
+Option choices allow you to restrict what the user is allowed to input. In
+this tutorial another subcommand will be added which styles text with
+Discord's flavour of Markdown.
 
-If you want to mix between different types, such as having an integer choice
-and a string choice, then it is best to use the strig type and "stringify"
-the interger. It is not possible to mix types.
+## Initial command boilerplate
 
-## Defining Option Choices
+At this point in the tutorial, options and commands have already been
+explained so that won't be repeated here.
 
-Wumpy has several ways to actually define which choices the user has. The
-most basic way is to pass `choices=...` to the `Option()` parameter default
-or `@option()` decorator:
+Define a subcommand named `markdown` which a suitable descriptions that has
+two options - `style` and `text` - both annotated as `str`:
 
 ```python
-@app.command()
-async def rps(
+text = app.group('text', 'Group of text manipulation commands')
+
+
+@text.command()
+async def markdown(
         interaction: CommandInteraction,
-        play: str = Option(
-            description='The play to make against the bot',
-            choices=['rock', 'paper', 'scissors']
-        ),
+        style: str = Option(description='New style of the text'),
+        text: str = Option(description='Text to style with Markdown'),
 ) -> None:
-    """Play rock, paper, scissors against the bot."""
-    pass
+    """Apply Markdown styles to the passed text."""
+    ...
 ```
 
-When your command callback is called, the parameter will be one of the passed
-values.
+## Specifying command option choices
 
-The choices can also be defined as a dictionary with the key being the name of
-the choice presented to the user and the value being the value passed to the
-command callback:
+With the current definition of the command, the user is allowed to input
+anything for the `style` option. To change this, you need to specify the
+choices they can decide between.
+
+Specifying choices is done by passing `choices=` to `Option()` with a list
+or dictionary of all the choices available. In this case that list will be
+`['bold', 'italic', 'underline']`:
 
 ```python
-@app.command()
-async def rps(
+text = app.group('text', 'Group of text manipulation commands')
+
+
+@text.command()
+async def markdown(
         interaction: CommandInteraction,
-        play: str = Option(
-            description='The play to make against the bot',
-            choices={'rock': 'r', 'paper': 'p', 'scissors': 's']
+        style: str = Option(
+            description='New style of the text',
+            choices=['bold', 'italic', 'underline']
         ),
+        text: str = Option(description='Text to style with Markdown'),
 ) -> None:
-    """Play rock, paper, scissors against the bot."""
-    pass
+    """Apply Markdown styles to the passed text."""
+    ...
 ```
 
-In this example, when the user selects the `'paper'` choice while invoking the
-command, the command callback's `play` parameter will be `p`.
+Since Python has a native way to represent a string being of specific values
+using `Literal`, the library can read this and make out the choices. Doing
+this has the benefit of improving the editor experience while implementing
+the command.
 
-## Choices in Annotations
-
-Since the library reads the parameter annotations, it is also possible to use
-the `Literal` annotation for this. This works similar to passing a list to
-the `choices=` keyword argument:
+Remove the `choices=` parameter and instead annotate the option
+with `Literal['bold', 'italic', 'underline']`:
 
 ```python
-@app.command()
-async def rps(
+text = app.group('text', 'Group of text manipulation commands')
+
+
+@text.command()
+async def markdown(
         interaction: CommandInteraction,
-        play: Literal['rock', 'paper', 'scissors'] = Option(
-            description='The play to make against the bot',
+        style: Literal['bold', 'italic', 'underline'] = Option(
+            description='New style of the text',
         ),
+        text: str = Option(description='Text to style with Markdown'),
 ) -> None:
-    """Play rock, paper, scissors against the bot."""
-    pass
+    """Apply Markdown styles to the passed text."""
+    ...
 ```
 
-### Representing Choices with Enums
+## Implementing the created command
 
-Wumpy can also read an Enum as a set of choices if you prefer working with that
-as opposed to strings and literals. To utilize this feature, start by creating
-an Enum subclass with the choices the user should have:
-
-```python
-from enum import Enum
-
-
-class RockPaperScissors(Enum):
-    rock = 'rock'
-    paper = 'paper'
-    scissors = 'scissors'
-```
-
-The name of the enum member is what will be shown to the user. You can place
-much more complex types in the enum value than strings, integers and floats as
-these are not sent to Discord.
-
-You can now annotate the option with this Enum subclass and Wumpy will read
-the members as choices for the user:
+Now that only `'bold'`, `'italic'`, and `'underline'` can be passed as the
+`style` option, it is time to implement the command. Create a dictionary which
+maps the style to the wrapping symbols:
 
 ```python
-from enum import Enum
+text = app.group('text', 'Group of text manipulation commands')
 
 
-class RockPaperScissors(Enum):
-    Rock = 'rock'
-    Paper = 'paper'
-    Scissors = 'scissors'
-
-
-@app.command()
-async def rps(
+@text.command()
+async def markdown(
         interaction: CommandInteraction,
-        play: RockPaperScissors = Option(
-            description='The play to make against the bot',
+        style: Literal['bold', 'italic', 'underline'] = Option(
+            description='New style of the text',
         ),
+        text: str = Option(description='Text to style with Markdown'),
 ) -> None:
-    """Play rock, paper, scissors against the bot."""
-    pass
+    """Apply Markdown styles to the passed text."""
+    mapping = {
+        'bold': '**',
+        'italic': '*',
+        'underline': '__',
+    }
 ```
 
-When the command is dispatched the command callback will receive the
-corresponding Enum instance of the choice the user made.
+Finally, respond to the interaction with the symbols inserted in front of- and
+behind the text:
+
+```python
+text = app.group('text', 'Group of text manipulation commands')
+
+
+@text.command()
+async def markdown(
+        interaction: CommandInteraction,
+        style: Literal['bold', 'italic', 'underline'] = Option(
+            description='New style of the text',
+        ),
+        text: str = Option(description='Text to style with Markdown'),
+) -> None:
+    """Apply Markdown styles to the passed text."""
+    mapping = {
+        'bold': '**',
+        'italic': '*',
+        'underline': '__',
+    }
+
+    wrapper = mapping[style]
+    await interaction.respond(wrapper + text + wrapper)
+```
