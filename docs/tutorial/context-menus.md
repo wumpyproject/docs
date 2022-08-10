@@ -2,41 +2,68 @@
 
 Context menus are another type of Discord application commands. These types of
 commands are not invoked by typing `/`, rather, they show up as context menus
-when right clicking their corresponding object.
+when right clicking their corresponding object. This tutorial will walk through
+remaking the previous `/text reverse` command into a context menu.
 
 Currently, Discord has support for user commands and message commands. That
 is, you can right click a user or message and under Apps see these commands.
 
-To define a context menu command, you should pass either `CommandType.user`
-or `CommandType.message` to the `@app.command()` decorator. These types of
-commands also take one additional argument depending on which type it is but
-do not support more options. Take a look at the following examples:
+## Defining context menus
 
-=== "User context menu"
+Context menu commands cannot be nested as subcommands but are defined similar
+to normal slash commands using the `@app.command()` decorator. To tell the
+library to create a context menu command, you need to pass either
+`CommandType.user` or `CommandType.message` to the decorator:
 
-    ```python
-    @app.command(CommandType.user)
-    async def wave(
-            interaction: CommandInteraction,
-            user: Interactionuser
-    ) -> None:
-        """Wave hello to someone!"""
-        await interaction.respond(f'{interaction.user} waves to {user} 👋')
-    ```
+```python
+@app.command(CommandType.message)
+async def reverse(...) -> None:
+    """Reverse a message's content."""
+    ...
+```
 
-=== "Message context menu"
+Now add the necessary parameters for the interaction and target (the user
+or message, depending on context menu type):
 
-    ```python
-    @app.command(CommandType.message)
-    async def reverse(
-            interaction: CommandInteraction,
-            message: Message,
-    ) -> None:
-        """Reverse a message's content."""
-        # This is a neat indexing trick - by passing a step of -1 the
-        # string gets reversed.
-        await interaction.respond(message.content[::-1])
-    ```
+```python
+@app.command(CommandType.message)
+async def reverse(
+        interaction: CommandInteraction,
+        message: Message,
+) -> None:
+    """Reverse a message's content."""
+    ...
+```
 
-Context menus don't get more complicated than that, hence the documentation
-won't go into it more.
+## Finalizing the command
+
+Finally, just copy the text reversal from the previous `/text reverse` command,
+but change `text` to `message.content`. It should look like this:
+
+```python
+@app.command(CommandType.message)
+async def reverse(
+        interaction: CommandInteraction,
+        message: Message,
+) -> None:
+    """Reverse a message's content."""
+    await interaction.respond(message.content[::-1])
+```
+
+Try implementing another context menu that reverses the name of the user it is
+applied to! It should look like this:
+
+```python
+@app.command(CommandType.user)
+async def reverse(
+        interaction: CommandInteraction,
+        message: InteractionUser,
+) -> None:
+    """Reverse a user's name."""
+    await interaction.respond(user.name[::-1])
+```
+
+Once you understand defining commands in Wumpy, context menus don't get much
+more complicated than this. Therefore not a lot of time is spent explaining or
+walking through them. Continue to the next tutorial about advanced slash
+command options!
