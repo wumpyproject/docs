@@ -29,13 +29,14 @@ markdown_extensions:
 nav:
   - Home: 'index.md'
 
-  - Tutorial:
-    - Getting Set Up: 'tutorial/getting-set-up/index.md'
-    - Creating Commands: 'tutorial/creating-commands/index.md'
-    - Command Options: 'tutorial/command-options.md'
-    - Option Choices: 'tutorial/option-choices.md'
-    - Context menus: 'tutorial/context-menus.md'
-    - Advanced Options: 'tutorial/advanced-options.md'
+  - Getting Started:
+    - Developer usage:
+      - Getting Set Up: 'getting-started/getting-set-up/index.md'
+      - Creating Commands: 'getting-started/creating-commands/index.md'
+      - Command Options: 'getting-started/command-options.md'
+      - Option Choices: 'getting-started/option-choices.md'
+      - Context menus: 'getting-started/context-menus.md'
+      - Advanced Options: 'tgetting-started/advanced-options.md'
 
   - Topics:
     - 'topics/index.md'
