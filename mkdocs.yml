@@ -35,6 +35,7 @@ nav:
     - Command Options: 'tutorial/command-options.md'
     - Option Choices: 'tutorial/option-choices.md'
     - Context menus: 'tutorial/context-menus.md'
+    - Advanced Options: 'tutorial/advanced-options.md'
 
   - Topics:
     - 'topics/index.md'
