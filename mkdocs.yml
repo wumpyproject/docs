@@ -37,6 +37,8 @@ nav:
       - Option Choices: 'getting-started/option-choices.md'
       - Context menus: 'getting-started/context-menus.md'
       - Advanced Options: 'tgetting-started/advanced-options.md'
+    - Library usage:
+      - Creating a library: 'getting-started/creating-a-library.md'
 
   - Topics:
     - 'topics/index.md'
