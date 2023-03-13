@@ -16,26 +16,16 @@
     {% endblock %}
   </head>
 
-  <body color-scheme="imagine">
+  <body color-scheme="wumpy">
 
     {% block masthead %}
       {% include "partials/masthead.html" %}
     {% endblock %}
 
     <div id="page-body" class="page-layout">
-      {% block sidebar %}
-        {% include "partials/sidebar.html" %}
+      {% block body required %}
+        {# This is separated from main, to allow 404 to render differently #}
       {% endblock %}
-
-      <main>
-        {% block content %}
-          {% include "partials/content.html" %}
-        {% endblock %}
-
-        {% block toc %}
-          {% include "partials/toc.html" %}
-        {% endblock %}
-      </main>
     </div>
 
     {% block footer %}

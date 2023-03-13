@@ -1,40 +1,55 @@
 <footer>
-  <div class="page-layout">
-    <nav class="footer-nav">
-      <a
-        href="{{ page.previous_page.url|url }}"
-        class="footer-link normalize-link"
-        rel="prev"
-      >
-        Previous page
-      </a>
-
-      <a
-        href="{{ page.next_page.url|url }}"
-        class="footer-link normalize-link"
-        rel="next"
-      >
-        Next page
-      </a>
-    </nav>
-
-    <hr />
-
-    {% if config.copyright %}
+  <div class="footer-content">
+    <div>
       <div>
-        {{ config.copyright }}
+        <img src="{{ config.theme.logo | url }}" />
       </div>
-    {% endif %}
 
-    <div class="footer-made-with">
-      Made with
-      <a
-        href="https://github.com/wumpyproject/docs/tree/main/theme"
-        class="normalize-link footer-theme-link footer-link"
-        target="_blank" rel="noopener"
-      >
-        Imagination for MKDocs
-      </a>
+      <div>
+        <div>
+          {% if config.theme.footer and config.theme.footer.name %}
+            {{ theme.footer.name }}
+          {% else %}
+            {{ config.site_name }}
+          {% endif %}
+        </div>
+
+        {% if config.theme.footer and config.theme.footer.tagline %}
+          <div>{{ config.theme.footer.tagline }}</div>
+        {% endif %}
+      </div>
+    </div>
+
+    <div>
+      {% if config.theme.footer and config.theme.footer.description %}
+        {{ config.theme.footer.description }}
+      {% else %}
+        {{ config.site_description }}
+      {% endif %}
+    </div>
+
+    <div>
+      <div>
+        {% if config.copyright %}
+          <div>
+            {{ config.copyright }}
+          </div>
+        {% endif %}
+        <div>
+          Made with
+          <a
+            href="https://github.com/wumpyproject/docs/"
+            class="normalize-link"
+            target="_blank" rel="noopener"
+          >
+            Wumpy theme
+          </a>
+          for MKDocs
+        </div>
+      </div>
+      <div>
+        Discord Github etc.
+      </div>
     </div>
   </div>
 </footer>

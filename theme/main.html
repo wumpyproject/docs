@@ -1,1 +1,17 @@
 {% extends "base.html" %}
+
+{% block body %}
+  {% block sidebar %}
+    {% include "partials/sidebar.html" %}
+  {% endblock %}
+
+  <main>
+    {% block content %}
+      {% include "partials/content.html" %}
+    {% endblock %}
+
+    {% block toc %}
+      {% include "partials/toc.html" %}
+    {% endblock %}
+  </main>
+{% endblock %}
