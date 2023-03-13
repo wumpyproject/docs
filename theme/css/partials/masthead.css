@@ -1,4 +1,4 @@
-header {
+.masthead {
   position: sticky;
   top: 0;
 
@@ -7,35 +7,40 @@ header {
   font-family: var(--font-headline);
 
   padding: 0.5rem;
-  padding-left: 1rem;
-  padding-right: 1rem;
+  padding-left: 200px;
+  padding-right: 200px;
 
   box-shadow:
     0 0 0.2rem rgba(0, 0, 0, 10%),
     0 0.2rem 0.4rem rgba(0, 0, 0, 20%);
 }
 
-#masthead {
+.masthead-nav {
   display: flex;
-  justify-content: space-between;
-  line-height: 3;
 }
 
-#masthead-nav {
+.masthead-home-link, .masthead-links > li {
+  font-size: 1.2em;
+  font-weight: 700;
+
+  line-height: 1.75;
+  letter-spacing: 0.5px;
+}
+
+.masthead-home-link {
+  display: block;
+
+  flex-basis: 19.5rem;
+}
+
+.masthead-links {
   display: flex;
   flex-grow: 1;
+
+  padding: 0;
   margin: 0;
+  list-style: none;
 }
 
-.masthead-nav-item {
-  display: inline-block;
-  color: white;
-  opacity: 0.7;
-  padding-left: 1em;
-  padding-right: 1em;
-  font-size: 1em;
-}
-
-#masthead-nav-active {
-  opacity: 1;
+.masthead-nav-active {
 }

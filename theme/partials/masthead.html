@@ -1,25 +1,31 @@
-{% macro find_url(item) %}
-  {% if item.url is defined %}
+{#
+  Find the first possible URL, for the masthead's links which don't
+  necessarily have an actual URL. The dashes tell Jinja to remove blankspace
+  and empty lines so that they do not appear in the final link
+#}
+{% macro find_url(item) -%}
+  {% if item.url is defined -%}
     {{ item.url | url }}
-  {% else %}
+  {%- else -%}
     {{ find_url(item.children | first) }}
-  {% endif %}
-{% endmacro %}
+  {%- endif %}
+{%- endmacro %}
 
-<header>
-  <nav id="masthead" class="page-layout">
+<header class="masthead">
+  <nav class="masthead-nav">
 
-    <div>
-      {% block site_name %}
-        <a class="normalize-link" href="{{ nav.homepage.url|url }}">{{ config.site_name }}</a>
-      {% endblock %}
-    </div>
+    <a class="masthead-home-link" class="normalize-link">
+      {% if config.theme.logo %}
+        <img src="{{ config.theme.logo|url }}" width="48" height="48" />
+      {% endif %}
 
-    <ul id="masthead-nav">
+      {{ config.site_name }}
+    </a>
+ 
+    <ul class="masthead-links">
       {% for nav_item in nav %}
         <li
-          {% if nav_item.active %} id="masthead-nav-active" {% endif %}
-          class="masthead-nav-item"
+          {% if nav_item.active %} class="masthead-nav-active" {% endif %}
         >
           <a class="normalize-link" href="{{ find_url(nav_item) }}">{{ nav_item.title }}</a>
         </li>
