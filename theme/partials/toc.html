@@ -1,32 +1,45 @@
-<nav id="toc">
-  {% macro render_item(item) %}
-    <li>
-      <a class="normalize-link" href="{{ item.url|url }}">{{ item.title }}</a>
-      {% if item.children %}
-        <ul>
-          {% for child in item.children %}
-            {{ render_item(child)}}
-          {% endfor %}
-        </ul>
-      {% endif %}
-    </li>
-  {% endmacro %}
+{% macro render_item(item) %}
+  <li>
+    <a class="normalize-link" href="{{ item.url|url }}">{{ item.title }}</a>
+    {% if item.children %}
+      <ul>
+        {% for child in item.children %}
+          {{ render_item(child)}}
+        {% endfor %}
+      </ul>
+    {% endif %}
+  </li>
+{% endmacro %}
 
+<nav class="right-hand">
   {% if page.toc and page.meta.toc|default(true) %}
-    <strong>Table of Contents</strong>
+    <div class="right-hand-separator">
+      <strong>Table of Contents</strong>
 
-    <ul id="toc-list">
-      {% for item in page.toc %}
-        {% if item.level == 1 %}
-          {% for child in item.children %}
-            {{ render_item(child)}}
-          {% endfor %}
-    
-        {% else %}
-          {{ render_item(item) }}
-        {% endif %}
-      {% endfor %}
+      <ul id="toc-list">
+        {% for item in page.toc %}
+          {% if item.level == 1 %}
+            {% for child in item.children %}
+              {{ render_item(child)}}
+            {% endfor %}
+      
+          {% else %}
+            {{ render_item(item) }}
+          {% endif %}
+        {% endfor %}
+      </ul>
+    </div>
+  {% else %}
+    <div class="right-hand-separator"></div>
+  {% endif %}
 
-    </ul>
+  <div class="right-hand-separator">Search in this page...</div>
+
+  <div class="right-hand-separator">Socials like Discord</div>
+
+  {% if config.copyright %}
+    <div class="right-hand-copyright">
+      {{ config.copyright }}
+    </div>
   {% endif %}
 </nav>

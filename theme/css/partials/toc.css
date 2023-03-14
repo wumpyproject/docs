@@ -1,4 +1,24 @@
-#toc {
+.right-hand {
+  padding: 2rem;
+
+  flex-shrink: 0;
+  flex-basis: 35rem;
+
+  background-color: var(--toc-background);
+}
+
+.right-hand-separator {
+  padding-bottom: 1rem;
+  border-bottom: 2px solid var(--accent-color);
+  margin-bottom: 1rem;
+}
+
+.right-hand-copyright {
+  font-style: italic;
+  color: var(--background-dark);
+}
+
+.toc {
   top: 6rem;
   width: 12rem;
   height: 0;
