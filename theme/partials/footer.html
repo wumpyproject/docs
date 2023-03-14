@@ -1,9 +1,7 @@
 <footer>
   <div class="footer-content">
-    <div>
-      <div>
-        <img src="{{ config.theme.logo | url }}" />
-      </div>
+    <div class="footer-branding">
+      <img src="{{ config.theme.logo | url }}" width="96" height="96" />
 
       <div>
         <div>
@@ -20,10 +18,10 @@
       </div>
     </div>
 
-    <div>
+    <div class="footer-description">
       {% if config.theme.footer and config.theme.footer.description %}
         {{ config.theme.footer.description }}
-      {% else %}
+      {% elif config.site_description %}
         {{ config.site_description }}
       {% endif %}
     </div>
