@@ -2,13 +2,10 @@
   position: sticky;
   top: 0;
 
-  color: white;
-  background-color: var(--primary-color);
-  font-family: var(--font-headline);
+  color: var(--white-hue);
+  background-color: var(--masthead-background);
 
-  padding: 0.5rem;
-  padding-left: 200px;
-  padding-right: 200px;
+  padding: 0.5rem 200px 0.5rem 200px;
 
   box-shadow:
     0 0 0.2rem rgba(0, 0, 0, 10%),
@@ -19,6 +16,7 @@
   display: flex;
 }
 
+/* Masthead font settings */
 .masthead-home-link, .masthead-links > li {
   font-size: 1.2em;
   font-weight: 700;
@@ -27,20 +25,40 @@
   letter-spacing: 0.5px;
 }
 
-.masthead-home-link {
-  display: block;
+.masthead-home-link:hover, .masthead-links > li:hover {
+  color: var(--background-white);
+}
 
+.masthead-home {
   flex-basis: 19.5rem;
+}
+.masthead-home-link {
+  display: flex;
+  align-items: center;
+}
+.masthead-home-text {
+  margin-left: 1rem;
 }
 
 .masthead-links {
   display: flex;
-  flex-grow: 1;
+  align-items: center;
+  justify-content: space-evenly;
+
+  flex: 1;
 
   padding: 0;
   margin: 0;
   list-style: none;
 }
+.masthead-links a {
+  display: block;
+}
 
 .masthead-nav-active {
+  color: var(--accent-color) !important;
+}
+
+.masthead-source {
+  flex-basis: 22.5rem;
 }

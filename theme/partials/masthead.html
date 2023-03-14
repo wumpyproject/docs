@@ -5,22 +5,24 @@
 #}
 {% macro find_url(item) -%}
   {% if item.url is defined -%}
-    {{ item.url | url }}
+    {{ item.url|url }}
   {%- else -%}
-    {{ find_url(item.children | first) }}
+    {{ find_url(item.children|first) }}
   {%- endif %}
 {%- endmacro %}
 
 <header class="masthead">
   <nav class="masthead-nav">
 
-    <a class="masthead-home-link" class="normalize-link">
-      {% if config.theme.logo %}
-        <img src="{{ config.theme.logo|url }}" width="48" height="48" />
-      {% endif %}
+    <div class="masthead-home">
+      <a class="masthead-home-link" class="normalize-link">
+        {% if config.theme.logo %}
+          <img src="{{ config.theme.logo|url }}" width="48" height="48" />
+        {% endif %}
 
-      {{ config.site_name }}
-    </a>
+        <span class="masthead-home-text">{{ config.site_name }}</span>
+      </a>
+    </div>
  
     <ul class="masthead-links">
       {% for nav_item in nav %}
@@ -32,9 +34,7 @@
       {% endfor %}
     </ul>
 
-    <a class="normalize-link" href="{{ config.repo_url }}">
-      {{ config.repo_name }}
-    </a>
+    <div class="masthead-source"></div>
 
   </nav>
 </header>
