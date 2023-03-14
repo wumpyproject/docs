@@ -20,6 +20,9 @@ markdown_extensions:
   - admonition
   - meta
 
+  - toc:
+      permalink: ¶
+
   - pymdownx.highlight:
       use_pygments: true
 
