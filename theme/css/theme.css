@@ -18,10 +18,6 @@ body {
   font-family: 'Atkinson Hyperlegible', Helvetica, sans-serif;
 }
 
-article ol, article p, article ul {
-  line-height: 1.7;
-}
-
 #page-body {
   display: flex;
   align-items: baseline;
