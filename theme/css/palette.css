@@ -1,9 +1,17 @@
 [color-scheme="wumpy"] {
-  --primary-color: #5865f2;
-  --font-headline:
-    "Whitney", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+  /* Color scheme itself */
+  --accent-color: #58F288;
 
-  --branding-not-quite-black: #23272a;
-  --foter-color: white;
-  --footer-made-with: #959a98;
+  --white-hue: #FFFFFF;
+  --foreground-light: #F8F8F8;
+  --foreground-dark: #F3F3F3;
+  --background-white: #DBDDE0;
+
+  --background-dark: #383B3F;
+  --background-darker: #282B2F;
+
+  /* Element specific variables */
+  --masthead-background: var(--background-dark);
+  --toc-background: var(--foreground-dark);
+  --footer-background: var(--background-darker);
 }
