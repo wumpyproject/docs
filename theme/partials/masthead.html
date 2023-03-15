@@ -14,10 +14,10 @@
 <header class="masthead">
   <nav class="masthead-nav">
 
-    <div class="masthead-home">
+    <div class="masthead-home masthead-side-panel">
       <a class="masthead-home-link" class="normalize-link">
         {% if config.theme.logo %}
-          <img src="{{ config.theme.logo|url }}" width="48" height="48" />
+          <img class="masthead-home-logo" src="{{ config.theme.logo|url }}" width="48" height="48" />
         {% endif %}
 
         <span class="masthead-home-text">{{ config.site_name }}</span>

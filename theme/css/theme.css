@@ -23,12 +23,12 @@ body {
   align-items: flex-start;
 
   flex-grow: 1;
-
-  padding-left: 200px;
 }
 
 main {
   display: flex;
+
+  flex-grow: 1;
 }
 
 .normalize-link {

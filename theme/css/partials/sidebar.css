@@ -2,8 +2,10 @@
   top: 6rem;
   position: sticky;
 
-  flex-shrink: 0;
-  flex-basis: 18rem;
+  min-width: 17rem;
+
+  margin-left: 2rem;
+  margin-right: 2rem;
 }
 
 .sidebar ul {

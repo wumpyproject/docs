@@ -5,8 +5,6 @@
   color: var(--white-hue);
   background-color: var(--masthead-background);
 
-  padding: 0.5rem 200px 0.5rem 200px;
-
   box-shadow:
     0 0 0.2rem rgba(0, 0, 0, 10%),
     0 0.2rem 0.4rem rgba(0, 0, 0, 20%);
@@ -14,6 +12,9 @@
 
 .masthead-nav {
   display: flex;
+  justify-content: space-around;
+
+  padding: 0.5rem 2rem 0.5rem 2rem;
 }
 
 /* Masthead font settings */
@@ -30,29 +31,41 @@
 }
 
 .masthead-home {
-  flex-basis: 19.5rem;
+  /* Note that if the link text is too long, it'll
+     expand this and the layout won't line up exactly */
+  min-width: 17rem;
+
+  margin-right: 2rem;
 }
+
 .masthead-home-link {
   display: flex;
   align-items: center;
+
+  white-space: nowrap;
 }
-.masthead-home-text {
-  margin-left: 1rem;
+.masthead-home-logo {
+  margin-right: 1rem;
 }
 
 .masthead-links {
   display: flex;
   align-items: center;
-  justify-content: space-evenly;
+  justify-content: space-between;
 
-  flex: 1;
+  width: 44rem;
 
   padding: 0;
   margin: 0;
   list-style: none;
+
+  white-space: nowrap;
 }
 .masthead-links a {
   display: block;
+
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
 }
 
 .masthead-nav-active {
@@ -60,5 +73,5 @@
 }
 
 .masthead-source {
-  flex-basis: 22.5rem;
+  flex-grow: 1;
 }

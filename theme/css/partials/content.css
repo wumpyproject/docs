@@ -2,11 +2,12 @@ article {
   padding-top: 2rem;
   padding-bottom: 2rem;
 
-  margin-left: 1.5rem;
-  margin-right: 7.5rem;
+  margin-right: 4rem;
 
   font-weight: 400;
   line-height: 1.4;
+
+  width: 40rem;
 }
 
 .headerlink {
