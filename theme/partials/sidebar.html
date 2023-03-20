@@ -11,17 +11,19 @@
   </ul>
 {% endmacro %}
 
-<nav class="sidebar">
-  {% set active = nav | selectattr('active', 'true') | list %}
+<div class="sidebar-wrapper">
+  <nav class="sidebar">
+    {% set active = nav | selectattr('active', 'true') | list %}
 
-  {% if active | length > 0 and page.meta.sidebar|default(true) %}
-    {% set tab = active | first %}
-    <strong>{{ tab.title }}</strong>
+    {% if active | length > 0 and page.meta.sidebar|default(true) %}
+      {% set tab = active | first %}
+      <strong>{{ tab.title }}</strong>
 
-    {% if tab.children %}
-      <div class="sidebar-links">
-        {{ render_sidebar(tab.children) }}
-      </div>
+      {% if tab.children %}
+        <div class="sidebar-links">
+          {{ render_sidebar(tab.children) }}
+        </div>
+      {% endif %}
     {% endif %}
-  {% endif %}
-</nav>
+  </nav>
+</div>

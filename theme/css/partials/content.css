@@ -1,4 +1,11 @@
-article {
+.page-content {
+  max-width: 52rem;
+
+  flex-grow: 1;
+  flex-shrink: 1;
+}
+
+article.page-content {
   padding-top: 2rem;
   padding-bottom: 2rem;
 
@@ -6,8 +13,6 @@ article {
 
   font-weight: 400;
   line-height: 1.4;
-
-  width: 40rem;
 }
 
 .headerlink {

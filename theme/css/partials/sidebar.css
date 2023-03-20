@@ -1,8 +1,16 @@
+.sidebar-wrapper {
+  display: flex;
+  justify-content: flex-end;
+
+  flex-grow: 1;
+}
+
 .sidebar {
   top: 6rem;
   position: sticky;
 
-  min-width: 17rem;
+  flex-grow: 1;
+  max-width: 18rem;
 
   margin-left: 2rem;
   margin-right: 2rem;
