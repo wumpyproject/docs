@@ -28,11 +28,9 @@
       {% include "partials/masthead.html" %}
     {% endblock %}
 
-    <div id="page-body" class="page-layout">
-      {% block body required %}
-        {# This is separated from main, to allow 404 to render differently #}
-      {% endblock %}
-    </div>
+    {% block body required %}
+      {# This is separated from main, to allow 404 to render differently #}
+    {% endblock %}
 
     {% block footer %}
       {% include "partials/footer.html" %}

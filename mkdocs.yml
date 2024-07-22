@@ -8,6 +8,8 @@ theme:
   name: null
   custom_dir: 'theme/'
 
+  logo: 'wumpy-final-perfected.svg'
+
 plugins:
   - mkdocstrings:
       default_handler: python

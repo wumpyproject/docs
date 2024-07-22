@@ -11,7 +11,7 @@
 
 .right-hand-nav {
   flex-grow: 1;
-  max-width: 30rem;
+  width: 33rem;
 }
 
 .right-hand-separator {

@@ -1,15 +1,21 @@
 {% extends "base.html" %}
 
 {% block body %}
-  {% block sidebar %}
-    {% include "partials/sidebar.html" %}
-  {% endblock %}
+  <div id="page-body" class="page-layout">
+    <div class="sidebar-spacer"></div>
 
-  {% block content %}
-    {% include "partials/content.html" %}
-  {% endblock %}
+    {% block sidebar %}
+      {% include "partials/sidebar.html" %}
+    {% endblock %}
 
-  {% block toc %}
-    {% include "partials/right-hand.html" %}
-  {% endblock %}
+    {% block content %}
+      {% include "partials/content.html" %}
+    {% endblock %}
+
+    <div class="right-hand-spacer"></div>
+
+    {% block toc %}
+      {% include "partials/right-hand.html" %}
+    {% endblock %}
+  </div>
 {% endblock %}
